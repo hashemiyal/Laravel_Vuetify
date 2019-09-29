@@ -8,6 +8,16 @@
           <v-container> 
             <v-row>
               <v-col cols="12" sm="12" md="12">
+              <v-alert
+              dense
+              text
+              type="error"
+              v-if="!credintial"
+              >
+      wrong username or password
+    </v-alert>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
               <v-text-field label="username" outlined required color='gray' v-model='username'></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12">
@@ -22,6 +32,9 @@
                  counter
                  @click:append="show1 = !show1"
                  ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                 <v-switch v-model="remember_me" label="rememberMe"></v-switch>
               </v-col>
               </v-row>
           </v-container>
@@ -39,9 +52,9 @@ export default {
     return {
     username:'',
     password:'',
-     show1: false,
-     
-      rules: {
+    show1: false,
+    remember_me:false,
+    rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters',
         },
@@ -49,9 +62,15 @@ export default {
   },
   methods:{
   	Login(){
-    this.$store.dispatch('login',{email:this.username,password:this.password});
+    this.$store.dispatch('login',{email:this.username,password:this.password,remember_me:this.remember_me});
   	}
+  },
+  computed:{
+    credintial(){
+      return this.$store.state.credintial;
+    }
   }
+
 }
 </script>
 <style lang="css" scoped>

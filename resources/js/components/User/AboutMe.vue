@@ -16,9 +16,10 @@
             <v-alert
             icon="highlight" 
             >
-            Hi there I AM MURTAZA FROM KABUL AFGHANISTAN 
-            GRADUATED FROM KABUL UNIVERSITY 2017 FACULTY OF COMPUTER SCIENCE
-            FINISHED HIGH SCHOOL AT ABDUL RAHIM SHAHEED.
+            Hi There!
+            I am  MURTAZA I was born in  KABUL AFGHANISTAN 1996
+            graduated from kabul University computer science faculty department of software engineering
+            finished my high school from Abdul Rahim shaheed high school
          </v-alert>
       </v-timeline-item> 
       </v-timeline>

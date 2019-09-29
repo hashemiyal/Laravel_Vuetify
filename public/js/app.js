@@ -1959,6 +1959,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2076,6 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AboutMe',
   data: function data() {
@@ -2131,12 +2140,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       username: '',
       password: '',
       show1: false,
+      remember_me: false,
       rules: {
         required: function required(value) {
           return !!value || 'Required.';
@@ -2151,8 +2174,14 @@ __webpack_require__.r(__webpack_exports__);
     Login: function Login() {
       this.$store.dispatch('login', {
         email: this.username,
-        password: this.password
+        password: this.password,
+        remember_me: this.remember_me
       });
+    }
+  },
+  computed: {
+    credintial: function credintial() {
+      return this.$store.state.credintial;
     }
   }
 });
@@ -4331,6 +4360,12 @@ var render = function() {
   return _c(
     "v-container",
     [
+      _vm.autheticated
+        ? _c("v-alert", { attrs: { dense: "", text: "", type: "success" } }, [
+            _vm._v("\r\n      You are Logged in!\r\n    ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "v-card",
         { attrs: { id: "top" } },
@@ -4588,7 +4623,7 @@ var render = function() {
                     [
                       _c("v-alert", { attrs: { icon: "highlight" } }, [
                         _vm._v(
-                          "\n            Hi there I AM MURTAZA FROM KABUL AFGHANISTAN \n            GRADUATED FROM KABUL UNIVERSITY 2017 FACULTY OF COMPUTER SCIENCE\n            FINISHED HIGH SCHOOL AT ABDUL RAHIM SHAHEED.\n         "
+                          "\n            Hi There!\n            I am  MURTAZA I was born in  KABUL AFGHANISTAN 1996\n            graduated from kabul University computer science faculty department of software engineering\n            finished my high school from Abdul Rahim shaheed high school\n         "
                         )
                       ])
                     ],
@@ -4748,6 +4783,27 @@ var render = function() {
                         "v-col",
                         { attrs: { cols: "12", sm: "12", md: "12" } },
                         [
+                          !_vm.credintial
+                            ? _c(
+                                "v-alert",
+                                {
+                                  attrs: { dense: "", text: "", type: "error" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\r\n      wrong username or password\r\n    "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", sm: "12", md: "12" } },
+                        [
                           _c("v-text-field", {
                             attrs: {
                               label: "username",
@@ -4794,6 +4850,24 @@ var render = function() {
                                 _vm.password = $$v
                               },
                               expression: "password"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", sm: "12", md: "12" } },
+                        [
+                          _c("v-switch", {
+                            attrs: { label: "rememberMe" },
+                            model: {
+                              value: _vm.remember_me,
+                              callback: function($$v) {
+                                _vm.remember_me = $$v
+                              },
+                              expression: "remember_me"
                             }
                           })
                         ],
@@ -58830,7 +58904,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     autheticated: localStorage.getItem('autheticated'),
     posts: [],
-    users: {}
+    users: {},
+    credintial: true
   },
   actions: {
     loadPosts: function loadPosts(_ref, payload) {
@@ -58846,12 +58921,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
       var commit = _ref3.commit;
       window.axios.post('api/user', payload).then(function (response) {
-        if (response['data'] == 'autheticated') {
+        if (response['data'] == 'credential does not match') {
+          return _this.state.credintial = false;
+        } else {
           localStorage.setItem('autheticated', true);
           _this.state.autheticated = true;
           _router__WEBPACK_IMPORTED_MODULE_2__["default"].push('/');
-        } else {
-          localStorage.setItem('autheticated', false);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -58861,6 +58936,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       console.log('logged out');
       localStorage.removeItem('autheticated');
       this.state.autheticated = false;
+      this.state.credintial = true;
     },
     save: function save(_ref4, payload) {
       var _this2 = this;

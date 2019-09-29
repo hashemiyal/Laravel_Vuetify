@@ -1,5 +1,13 @@
 <template>
 <v-container> 
+  <v-alert
+      dense
+      text
+      type="success"
+      v-if="autheticated"
+    >
+      You are Logged in!
+    </v-alert>
    <v-card
    id='top'>
     <v-card
